@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "author": "Ali Rashidi",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-pi-pico",
+      "id": "pico",
+      "top": 0,
+      "left": 0,
+      "attrs": { "env": "micropython-20231227-v1.22.0" }
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic1",
+      "top": -84.9,
+      "left": 91.9,
+      "attrs": { "distance": "60" }
+    },
+    { "type": "wokwi-pir-motion-sensor", "id": "pir1", "top": 4, "left": 203.82, "attrs": {} },
+    { "type": "wokwi-relay-module", "id": "relay1", "top": 125, "left": 192, "attrs": {} },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 102,
+      "left": 387.8,
+      "attrs": { "color": "red", "flip": "" }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": -16.8,
+      "left": 328.2,
+      "attrs": { "volume": "0.1" }
+    },
+    { "type": "wokwi-vcc", "id": "vcc1", "top": 48.76, "left": 432, "attrs": {} },
+    { "type": "wokwi-gnd", "id": "gnd1", "top": 182.4, "left": 393, "attrs": {} }
+  ],
+  "connections": [
+    [ "ultrasonic1:VCC", "pico:VBUS", "red", [ "v0" ] ],
+    [ "ultrasonic1:GND", "pico:GND.8", "black", [ "v0" ] ],
+    [ "ultrasonic1:TRIG", "pico:GP28", "orange", [ "v0" ] ],
+    [ "ultrasonic1:ECHO", "pico:GP27", "purple", [ "v0" ] ],
+    [ "pir1:VCC", "ultrasonic1:VCC", "red", [ "v0", "h-76.8" ] ],
+    [ "pir1:GND", "ultrasonic1:GND", "black", [ "v19.2", "h-67.46" ] ],
+    [ "pir1:OUT", "pico:GP26", "blue", [ "v9.6", "h-115.34", "v0", "v-6.45" ] ],
+    [ "relay1:VCC", "ultrasonic1:VCC", "red", [ "h0" ] ],
+    [ "relay1:GND", "pir1:GND", "black", [ "h-9.6", "v-38.8", "h76.8" ] ],
+    [ "relay1:IN", "pico:GP22", "magenta", [ "h-38.4", "v-48.2" ] ],
+    [ "bz1:1", "pir1:GND", "black", [ "v0" ] ],
+    [ "bz1:2", "pico:GP21", "gray", [ "v124.8", "h-221.2", "v-54.45" ] ],
+    [ "relay1:NO", "led1:A", "cyan", [ "h106.8", "v-11.4" ] ],
+    [ "vcc1:VCC", "relay1:COM", "red", [ "v19.2", "h-67.2", "v57.6" ] ],
+    [ "led1:C", "gnd1:GND", "black", [ "v0" ] ],
+    [ "led1:C", "bz1:1", "black", [ "v0", "h-47.6" ] ],
+    [ "bz1:2", "led1:A", "cyan", [ "v9.6", "h47.6", "v-48", "h67.2", "v105.6", "h-9.6" ] ]
+  ],
+  "dependencies": {}
+}
